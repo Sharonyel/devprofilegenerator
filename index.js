@@ -67,7 +67,7 @@ const colors = {
     photoBorderColor: "white"
   }
 };
-
+console.log("the color is " + colors)
 function generateHTML(res) {
   return `<!DOCTYPE html>
 <html lang="en">
@@ -76,6 +76,9 @@ function generateHTML(res) {
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta http-equiv="X-UA-Compatible" content="ie=edge" />
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"/>
+      <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
+      <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+      <link rel="icon" href="favicon.ico" type="image/x-icon">
       <link href="https://fonts.googleapis.com/css?family=BioRhyme|Cabin&display=swap" rel="stylesheet">
       <title>Document</title>
       <style>
@@ -216,12 +219,13 @@ function generateHTML(res) {
          }
       </style>
       <body>
-      <div>
+      <div class="container">
       <img src="${res.data.avatar_url}" alt="pic of Sharon Yelverton"></img>
           <h1>Hi!</h1>
           <h1>My name is ${res.data.name}</h1>
-          <h3>Location: ${res.data.location}</h3>
-          <h3>Github fontawesome <a href= ${res.data.html_url}></a></h3>
+          <h3> ${res.data.location}</h3>
+          <a href= ${res.data.html_url}><i class="fa fa-github fa-1x"
+          aria-hidden="true"></i></a>
           </div>
         <h5>${res.data.bio}</h5>
       <div class="container">
@@ -230,7 +234,7 @@ function generateHTML(res) {
             <div>Followers: ${res.data.followers}</div>
        </div> 
        <div class="row">    
-            <div>github stars</div>
+            <div>github stars ${res.data.public_gists}</div>
             <div>Following: ${res.data.following}</div>
       </div>
       </div>
