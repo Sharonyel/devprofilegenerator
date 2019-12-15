@@ -1,0 +1,26 @@
+{
+  "name": "devprofilegenerator",
+  "version": "1.0.0",
+  "description": "Profile Generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sharonyel/devprofilegenerator.git"
+  },
+  "keywords": [
+    "profile",
+    "generator"
+  ],
+  "author": "Sharon Yelverton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sharonyel/devprofilegenerator/issues"
+  },
+  "homepage": "https://github.com/Sharonyel/devprofilegenerator#readme",
+  "dependencies": {
+    "html-pdf": "^2.2.0"
+  }
+}
