@@ -9,7 +9,7 @@ function promptUser() {
   inquirer.prompt([
     {
       type: "input",
-      message: "what is your Github Username?",
+      message: "What is your Github Username?",
       name: "username"
     },
     {
@@ -17,18 +17,18 @@ function promptUser() {
       message: "Choose a color",
       name: "color",
       choices: [
-        "Red",
-        "Green",
-        "Blue"
+        "red",
+        "green",
+        "pink",
+        "blue"
       ]
     }
 
-  ]).then(function ({ username }) {
+  ]).then(function ({ username, color }) {
     const queryUrl = `https://api.github.com/users/${username}`;
 
     axios.get(queryUrl).then(function (res) {
-      const html = generateHTML(res);
-      console.log(res.data.color)
+      const html = generateHTML(res, color);
 
       return writeFileAsync("index.html", html);
     }).then(function () {
@@ -67,8 +67,8 @@ const colors = {
     photoBorderColor: "white"
   }
 };
-console.log("the color is " + colors)
-function generateHTML(res) {
+
+function generateHTML(res, color) {
   return `<!DOCTYPE html>
 <html lang="en">
    <head>
@@ -76,9 +76,6 @@ function generateHTML(res) {
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta http-equiv="X-UA-Compatible" content="ie=edge" />
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"/>
-      <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
-      <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-      <link rel="icon" href="favicon.ico" type="image/x-icon">
       <link href="https://fonts.googleapis.com/css?family=BioRhyme|Cabin&display=swap" rel="stylesheet">
       <title>Document</title>
       <style>
@@ -98,7 +95,7 @@ function generateHTML(res) {
          height: 100%;
          }
          .wrapper {
-         background-color: ${colors[res.data.color]};
+         background-color: ${colors[color].wrapperBackground};
          padding-top: 100px;
          }
          body {
@@ -114,7 +111,6 @@ function generateHTML(res) {
          h1, h2, h3, h4, h5, h6 {
          font-family: 'BioRhyme', serif;
          margin: 0;
-         text-align: center;
          }
          h1 {
          font-size: 3em;
@@ -141,8 +137,8 @@ function generateHTML(res) {
          display: flex;
          justify-content: center;
          flex-wrap: wrap;
-         background-color: ${colors[res.data.color]};
-         color: ${colors[res.data.color]};
+         background-color: ${colors[color].headerBackground};
+         color: ${colors[color].headerColor};
          padding: 10px;
          width: 95%;
          border-radius: 6px;
@@ -153,7 +149,7 @@ function generateHTML(res) {
          border-radius: 50%;
          object-fit: cover;
          margin-top: -75px;
-         border: 6px solid ${colors[res.data.color]};
+         border: 6px solid ${colors[color].photoBorderColor};
          box-shadow: rgba(0, 0, 0, 0.3) 4px 1px 20px 4px;
          }
          .photo-header h1, .photo-header h2 {
@@ -196,8 +192,8 @@ function generateHTML(res) {
          .card {
            padding: 20px;
            border-radius: 6px;
-           background-color: ${colors[res.data.color]};
-           color: ${colors[res.data.color]};
+           background-color: ${colors[color].headerBackground};
+           color: ${colors[color].headerColor};
            margin: 20px;
          }
          
@@ -219,28 +215,44 @@ function generateHTML(res) {
          }
       </style>
       <body>
-      <div class="container">
+      <div class="wrapper">
+      <div class="container photo-header">
       <img src="${res.data.avatar_url}" alt="pic of Sharon Yelverton"></img>
           <h1>Hi!</h1>
           <h1>My name is ${res.data.name}</h1>
-          <h3> ${res.data.location}</h3>
-          <a href= ${res.data.html_url}><i class="fa fa-github fa-1x"
-          aria-hidden="true"></i></a>
+          <div class="links-nav">
+          <a class="nav-link" href="${res.data.location}">${res.data.location}</a>
+          <a class="nav-link" href= ${res.data.html_url}><i class="fa fa-github fa-1x"
+          aria-hidden="true"></i>GitHub</a>
           </div>
-        <h5>${res.data.bio}</h5>
+          </div>
+      <main>        
       <div class="container">
+      <h5>${res.data.bio}</h5>
       <div class="row">
-            <div>Public Repos: ${res.data.public_repos}</div>
-            <div>Followers: ${res.data.followers}</div>
+          <div class="col">
+            <div class="card"><h5>Public Repos:</h5> <p>${res.data.public_repos}</p></div>
+          </div>
+          <div class="col">
+            <div class="card"><h5>Followers:</h5> <p>${res.data.followers}</p></div>
+          </div>
+            
        </div> 
-       <div class="row">    
-            <div>github stars ${res.data.public_gists}</div>
-            <div>Following: ${res.data.following}</div>
+       <div class="row">   
+          <div class="col"> 
+            <div class="card"><h5>github stars</h5> <p>${res.data.public_gists}</p></div>
+          </div>
+​
+          <div class="col">
+            <div class="card"><h5>Following:</h5> <p>${res.data.following}</p></div>
+          </div>
+            
       </div>
+      </div>
+      </main>
       </div>
       </body>
-      </html>`;
-}
+      </html>`}
 
 promptUser()
 

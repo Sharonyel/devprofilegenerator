@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/Sharonyel/devprofilegenerator#readme",
   "dependencies": {
+    "electron-html-to": "^2.6.0",
     "html-pdf": "^2.2.0"
   }
 }
