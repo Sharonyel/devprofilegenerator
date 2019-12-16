@@ -2,6 +2,7 @@ var fs = require("fs");
 var inquirer = require("inquirer");
 const util = require("util");
 const axios = require("axios");
+const convertFactory = require("electron-html-to")
 
 const writeFileAsync = util.promisify(fs.writeFile);
 
@@ -30,7 +31,19 @@ function promptUser() {
     axios.get(queryUrl).then(function (res) {
       const html = generateHTML(res, color);
 
-      return writeFileAsync("index.html", html);
+      const conversion = convertFactory({
+        converterPath: convertFactory.converters.PDF
+      });
+      conversion({ html }, function(err, result) {
+        if (err) {
+          return console.error(err);
+        }
+        result.stream.pipe(fs.createWriteStream("./profile.pdf"));
+        conversion.kill();
+        writeFileAsync("index.html", html);
+      })
+
+      // return writeFileAsync("index.html", html);
     }).then(function () {
       console.log("Successfully wrote to index.html");
     })
@@ -231,20 +244,20 @@ function generateHTML(res, color) {
       <h5>${res.data.bio}</h5>
       <div class="row">
           <div class="col">
-            <div class="card"><h5>Public Repos:</h5> <p>${res.data.public_repos}</p></div>
+            <div class="card"><h3>Public Repos:</h3> <h3>${res.data.public_repos}</h3></div>
           </div>
           <div class="col">
-            <div class="card"><h5>Followers:</h5> <p>${res.data.followers}</p></div>
+            <div class="card"><h3>Followers:</h3> <h3>${res.data.followers}</h3></div>
           </div>
             
        </div> 
        <div class="row">   
           <div class="col"> 
-            <div class="card"><h5>github stars</h5> <p>${res.data.public_gists}</p></div>
+            <div class="card"><h3>Github Stars</h3> <h3>${res.data.public_gists}</h3></div>
           </div>
 ​
           <div class="col">
-            <div class="card"><h5>Following:</h5> <p>${res.data.following}</p></div>
+            <div class="card"><h3>Following:</h3> <h3>${res.data.following}</h3></div>
           </div>
             
       </div>
