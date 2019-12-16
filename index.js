@@ -6,6 +6,7 @@ const convertFactory = require("electron-html-to")
 
 const writeFileAsync = util.promisify(fs.writeFile);
 
+
 function promptUser() {
   inquirer.prompt([
     {
@@ -234,9 +235,12 @@ function generateHTML(res, color) {
           <h1>Hi!</h1>
           <h1>My name is ${res.data.name}</h1>
           <div class="links-nav">
-          <a class="nav-link" href="${res.data.location}">${res.data.location}</a>
-          <a class="nav-link" href= ${res.data.html_url}><i class="fa fa-github fa-1x"
-          aria-hidden="true"></i>GitHub</a>
+          <a class="nav-link" href="${res.data.location}"><i class="fas fa-location-arrow fa-1x"
+          aria-hidden="true"></i> ${res.data.location}</a>
+          <a class="nav-link" href="${res.data.html_url}  "><i class="fab fa-github-square fa-1x"
+          aria-hidden="true"></i> GitHub</a>
+          <a class="nav-link" href="${res.data.blog}  "><i class="fas fa-rss-square fa-1x"
+          aria-hidden="true"></i> Blog</a>
           </div>
           </div>
       <main>        
@@ -253,7 +257,7 @@ function generateHTML(res, color) {
        </div> 
        <div class="row">   
           <div class="col"> 
-            <div class="card"><h3>Github Stars</h3> <h3>${res.data.public_gists}</h3></div>
+            <div class="card"><h3>Github Stars:</h3> <h3>${res.data.public_gists}</h3></div>
           </div>
 ​
           <div class="col">
