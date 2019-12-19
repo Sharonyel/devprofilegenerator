@@ -6,6 +6,7 @@ const convertFactory = require("electron-html-to")
 
 const writeFileAsync = util.promisify(fs.writeFile);
 
+// Promt user for input
 
 function promptUser() {
   inquirer.prompt([
@@ -26,21 +27,22 @@ function promptUser() {
       ]
     }
 
+// Axios calls to get the information from github
+
   ]).then(function ({ username, color }) {
     const queryUrl = `https://api.github.com/users/${username}`;
     const queryUrls = `https://api.github.com/users/${username}/starred`;
 
     axios.get(queryUrls).then(function (res) {
-      console.log("stars " + res.data)
       let starCnt = 0;
       res.data.forEach(function(obj){
         starCnt += obj.stargazers_count;
       })
-   console.log(starCnt);
-    
     
    axios.get(queryUrl).then(function (res) {
       const html = generateHTML(res, color, starCnt);
+
+// convert information to a pdf file using electron-html-to
 
       const conversion = convertFactory({
         converterPath: convertFactory.converters.PDF
@@ -54,9 +56,8 @@ function promptUser() {
         writeFileAsync("index.html", html);
       })
 
-      // return writeFileAsync("index.html", html);
     }).then(function () {
-      console.log("Successfully wrote to index.html");
+
     })
       .catch(function (err) {
         console.log(err);
@@ -92,6 +93,8 @@ const colors = {
     photoBorderColor: "white"
   }
 };
+
+// Generate HTML with the data from the api calls
 
 function generateHTML(res, color, starCnt) {
   return `<!DOCTYPE html>
@@ -281,8 +284,10 @@ function generateHTML(res, color, starCnt) {
       </main>
       </div>
       </body>
-      </html>`}
+      </html>`
+    }
 
-promptUser()
+// Function to prompt the user
+      promptUser()
 
 
