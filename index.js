@@ -28,9 +28,19 @@ function promptUser() {
 
   ]).then(function ({ username, color }) {
     const queryUrl = `https://api.github.com/users/${username}`;
+    const queryUrls = `https://api.github.com/users/${username}/starred`;
 
-    axios.get(queryUrl).then(function (res) {
-      const html = generateHTML(res, color);
+    axios.get(queryUrls).then(function (res) {
+      console.log("stars " + res.data)
+      let starCnt = 0;
+      res.data.forEach(function(obj){
+        starCnt += obj.stargazers_count;
+      })
+   console.log(starCnt);
+    
+    
+   axios.get(queryUrl).then(function (res) {
+      const html = generateHTML(res, color, starCnt);
 
       const conversion = convertFactory({
         converterPath: convertFactory.converters.PDF
@@ -51,6 +61,7 @@ function promptUser() {
       .catch(function (err) {
         console.log(err);
       });
+    })  
 
   });
 
@@ -82,7 +93,7 @@ const colors = {
   }
 };
 
-function generateHTML(res, color) {
+function generateHTML(res, color, starCnt) {
   return `<!DOCTYPE html>
 <html lang="en">
    <head>
@@ -234,8 +245,9 @@ function generateHTML(res, color) {
       <img src="${res.data.avatar_url}" alt="pic of Sharon Yelverton"></img>
           <h1>Hi!</h1>
           <h1>My name is ${res.data.name}</h1>
+          <h3>I'm a ${res.data.company}</h3>
           <div class="links-nav">
-          <a class="nav-link" href="${res.data.location}"><i class="fas fa-location-arrow fa-1x"
+          <a class="nav-link" href="https://www.google.com/maps/d/viewer?hl=en&ie=UTF8&msa=0&ll=35.173633959695465%2C-80.63937599999997&spn=0.387581%2C0.559616&source=embed&mid=1LyUjd4I7rYUxc8EcFmy_VgRqxMA&z=10"><i class="fas fa-location-arrow fa-1x"
           aria-hidden="true"></i> ${res.data.location}</a>
           <a class="nav-link" href="${res.data.html_url}  "><i class="fab fa-github-square fa-1x"
           aria-hidden="true"></i> GitHub</a>
@@ -257,7 +269,7 @@ function generateHTML(res, color) {
        </div> 
        <div class="row">   
           <div class="col"> 
-            <div class="card"><h3>Github Stars:</h3> <h3>${res.data.public_gists}</h3></div>
+            <div class="card"><h3>Github Stars:</h3> <h3>${starCnt}</h3></div>
           </div>
 ​
           <div class="col">
