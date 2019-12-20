@@ -7,11 +7,8 @@ node index.js
 
 How To Use:
 ---
+<img src="/profilegenerator.gif" width="50-0" height="600" />
 
-<video width="320" height="240" controls>
-  <source src="/profilegenerator.gif" type="action.gif">
-Your browser does not support the video tag.
-</video>
 
 The user will be prompted for a favorite color, which will be used as the background color for cards.
 
