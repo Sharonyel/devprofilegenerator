@@ -7,7 +7,7 @@ node index.js
 
 How To Use:
 ---
-<img src="/profilegenerator.gif" width="50-0" height="600" />
+<img src="/profilegenerator.gif" width="500" height="600" />
 
 
 The user will be prompted for a favorite color, which will be used as the background color for cards.
