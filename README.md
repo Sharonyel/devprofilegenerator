@@ -8,6 +8,11 @@ node index.js
 How To Use:
 ---
 
+<video width="320" height="240" controls>
+  <source src="./profilegenerator.webm" type="video/webm">
+Your browser does not support the video tag.
+</video>
+
 The user will be prompted for a favorite color, which will be used as the background color for cards.
 
 The PDF will be populated with the following:
@@ -31,11 +36,14 @@ Node.js
 
 Screen Shots
 ---
-<img src="images/ss7.jpg" width=300>
+<img src="images/ss7.jpg" width=500>
 
-<img src="images/ss3.jpg" width=300>  <img src="images/ss4.jpg" width=300>
 
-<img src="images/ss5.jpg" width=300>   <img src="images/ss8.jpg" width=300>
+Color options:
+
+<img src="images/ss3.jpg" width=500>  <img src="images/ss4.jpg" width=500>
+
+<img src="images/ss5.jpg" width=500>   <img src="images/ss8.jpg" width=500>
 
 
 
