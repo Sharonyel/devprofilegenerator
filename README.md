@@ -9,7 +9,7 @@ How To Use:
 ---
 
 <video width="320" height="240" controls>
-  <source src="./profilegenerator.webm" type="video/webm">
+  <source src="/profilegenerator.gif" type="action.gif">
 Your browser does not support the video tag.
 </video>
 
